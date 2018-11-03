@@ -1,6 +1,9 @@
 /*
 Essentially the 'model' class -- keeps track of the state of the robot, contains all of the advanced/composite functions used to control it, as well as containing references to all the subsystems that handle, eg, the lift, the wheels, etc. Basically, if you want to control the robot, you go through this class. There will only be one instance of SubsystemManager at a time, since it handles all the physical robot stuff.
 */
+
+import java.util.ArrayList;
+
 public class SubsystemManager implements Updateable{
 
     private Master current_master;  //the thing that's currently giving this thing instructions.
@@ -12,19 +15,24 @@ public class SubsystemManager implements Updateable{
     //incidentally, do we want these to be private? Commands should go from masters through SubsystemManager, and SubsystemManager can deal with converting that into individual commands.
 
     SubsystemManager() {
+
+        robot_map = RobotMap(); //initializes all the physical hardware bits, but doesn't do anything further with them
+        drivetrain = Drivetrain(robot_map)
+        // ... set up other Subsystems if present
         /*
         -setup all the Subsystems: Drivetrain, Grabbers, etc.
         -put them in default position -- a lot of this happened in robot.py , drive.py, and operatorFunctions in the past
         -HOWEVER: let the subsystems themselves set themselves up as much as possible. eg, tell liftMotor.setup() and let it handle itself
         -DON'T set up input -- that's InputManager's job
         */
+        //EDIT TO THE PREVIOUS COMMENT: RobotMap should create a lot of these sorts of things, SubsystemManager sets them in a usable state
     }
 
     public void update(double dt) {
         for(int i = 0; i < listOfUpdatingObjects.length(); ++i){
             listOfUpdatingObjects[i].update(dt);
         }
-        current_master.update(dt);    //current_master, which has a reference to this object, will call the variosu commands below to tell the robot to do things
+        current_master.update(dt);    //current_master, which has a reference to this object, will call the various commands below to tell the robot to do things
     }
 
         /*
