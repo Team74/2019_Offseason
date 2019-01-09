@@ -4,7 +4,7 @@ Essentially the 'model' class -- keeps track of the state of the robot, contains
 
 import java.util.ArrayList;
 
-public class SubsystemManager implements Updateable{
+public class SubsystemManager implements Updateable {
 
     private Master current_master;  //the thing that's currently giving this thing instructions.
     private ArrayList<Updateable> listOfUpdatingObjects = new ArrayList<Updateable>();  //this will have duplicate references from the various things below, plus others -- positionTracker, etc.
@@ -17,12 +17,12 @@ public class SubsystemManager implements Updateable{
     SubsystemManager() {
 
         robot_map = RobotMap(); //initializes all the physical hardware bits, but doesn't do anything further with them
-        drivetrain = Drivetrain(robot_map)
+        drivetrain = Drivetrain(robot_map);
         // ... set up other Subsystems if present
         /*
         -setup all the Subsystems: Drivetrain, Grabbers, etc.
-        -put them in default position -- a lot of this happened in robot.py , drive.py, and operatorFunctions in the past
-        -HOWEVER: let the subsystems themselves set themselves up as much as possible. eg, tell liftMotor.setup() and let it handle itself
+        -put them in default position -- a lot of this happened in robot.py, drive.py, and operatorFunctions in the past
+        -HOWEVER: let the subsystems themselves set themselves up as much as possible. eg, have RobotMap tell liftMotor.setup() and let it handle itself
         -DON'T set up input -- that's InputManager's job
         */
         //EDIT TO THE PREVIOUS COMMENT: RobotMap should create a lot of these sorts of things, SubsystemManager sets them in a usable state
