@@ -1,8 +1,12 @@
+package com.chaos;
+
 /*
 Essentially the 'model' class -- keeps track of the state of the robot, contains all of the advanced/composite functions used to control it, as well as containing references to all the subsystems that handle, eg, the lift, the wheels, etc. Basically, if you want to control the robot, you go through this class. There will only be one instance of SubsystemManager at a time, since it handles all the physical robot stuff.
 */
 
 import java.util.ArrayList;
+
+import com.chaos.behavior.Master;
 
 public class SubsystemManager implements Updateable {
 
@@ -16,8 +20,8 @@ public class SubsystemManager implements Updateable {
 
     SubsystemManager() {
 
-        robot_map = RobotMap(); //initializes all the physical hardware bits, but doesn't do anything further with them
-        drivetrain = Drivetrain(robot_map);
+        robot_map = new RobotMap(); //initializes all the physical hardware bits, but doesn't do anything further with them
+        drivetrain = new Drivetrain(robot_map);
         // ... set up other Subsystems if present
         /*
         -setup all the Subsystems: Drivetrain, Grabbers, etc.
@@ -28,9 +32,13 @@ public class SubsystemManager implements Updateable {
         //EDIT TO THE PREVIOUS COMMENT: RobotMap should create a lot of these sorts of things, SubsystemManager sets them in a usable state
     }
 
+    public void setCurrentMaster(Master _current_master) {
+        current_master = _current_master;
+    }
+
     public void update(double dt) {
-        for(int i = 0; i < listOfUpdatingObjects.length(); ++i){
-            listOfUpdatingObjects[i].update(dt);
+        for(int i = 0; i < listOfUpdatingObjects.size(); ++i){
+            listOfUpdatingObjects.get(i).update(dt);
         }
         current_master.update(dt);    //current_master, which has a reference to this object, will call the various commands below to tell the robot to do things
     }

@@ -1,8 +1,12 @@
+package com.chaos;
+
 /*
 Class that handles *human* input; for sensors, see SensorManager. Since the various TeleopMaster subclasses are the only thing that should be touching this class, it can get updated from there.
 */
 import java.util.HashMap;
 import java.util.Map;
+
+import edu.wpi.first.wpilibj.XboxController;
 
 public class InputManager implements Updateable {
 
@@ -11,7 +15,7 @@ public class InputManager implements Updateable {
 
 
     //All these are values that can be read from outside the class
-    public HashMap<String, boolean> buttons_pressed;
+    public HashMap<String, Boolean> buttons_pressed  = new HashMap<String, Boolean>();
     
     public double c1_l_joystick_x = 0; public double c1_l_joystick_y = 0;
     public double c1_r_joystick_x = 0; public double c1_r_joystick_y = 0;
@@ -21,15 +25,14 @@ public class InputManager implements Updateable {
 
 
     public InputManager() {
-        buttons_pressed = new HashMap<String, boolean>();
-        buttons_pressed.put('x', false);
-        buttons_pressed.put('y', false);
-        buttons_pressed.put('a', false);
-        buttons_pressed.put('b', false);
-        buttons_pressed.put('l_trigger', false);    //assume for now we'll never need the amount they're pressed down
-        buttons_pressed.put('r_trigger', false);
-        buttons_pressed.put('l_bumper', false);
-        buttons_pressed.put('r_bumper', false);
+        buttons_pressed.put("x", Boolean.FALSE);
+        buttons_pressed.put("y", Boolean.FALSE);
+        buttons_pressed.put("a", Boolean.FALSE);
+        buttons_pressed.put("b", Boolean.FALSE);
+        buttons_pressed.put("l_trigger", Boolean.FALSE);    //assume for now we'll never need the amount they're pressed down
+        buttons_pressed.put("r_trigger", Boolean.FALSE);
+        buttons_pressed.put("l_bumper", Boolean.FALSE);
+        buttons_pressed.put("r_bumper", Boolean.FALSE);
 
         //do whatever networktables voodoo is necessary to connect to the controller
     }
